@@ -1,0 +1,230 @@
+/* LearnTracker — minimal clean layout */
+
+:root {
+  --bg: #f8f9fa;
+  --card-bg: #fff;
+  --text: #212529;
+  --muted: #6c757d;
+  --accent: #0d6efd;
+  --danger: #dc3545;
+  --success: #198754;
+  --border: #dee2e6;
+  --radius: 8px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: system-ui, -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.5;
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+header h1 {
+  margin-bottom: 1.5rem;
+}
+
+header h1 a {
+  color: var(--text);
+  text-decoration: none;
+}
+
+h2 {
+  margin-bottom: 0.75rem;
+  font-size: 1.2rem;
+}
+
+/* --- Add skill form --- */
+.add-skill {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.add-skill form {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.add-skill input[type="text"] {
+  flex: 1;
+  min-width: 120px;
+  padding: 0.4rem 0.6rem;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  font-size: 0.95rem;
+}
+
+.add-skill input[type="number"] {
+  padding: 0.4rem;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  font-size: 0.95rem;
+}
+
+/* --- Skill cards --- */
+.skill-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.skill-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.skill-header h3 {
+  font-size: 1.1rem;
+}
+
+.remaining {
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.timer-display {
+  font-family: "Courier New", monospace;
+  font-size: 2rem;
+  text-align: center;
+  padding: 0.5rem 0;
+  color: var(--muted);
+}
+
+.timer-display.timer-active {
+  color: var(--accent);
+  font-weight: bold;
+}
+
+.timer-display.timer-done {
+  color: var(--success);
+}
+
+.skill-actions {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  margin-top: 0.5rem;
+}
+
+/* --- Buttons --- */
+button, .skill-actions a {
+  padding: 0.4rem 0.8rem;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  background: var(--card-bg);
+  cursor: pointer;
+  font-size: 0.85rem;
+  text-decoration: none;
+  color: var(--text);
+}
+
+button:hover, .skill-actions a:hover {
+  background: var(--bg);
+}
+
+.btn-start {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+
+.btn-start:hover {
+  opacity: 0.9;
+  background: var(--accent);
+}
+
+.btn-stop {
+  background: var(--danger);
+  color: #fff;
+  border-color: var(--danger);
+}
+
+.btn-stop:hover {
+  opacity: 0.9;
+  background: var(--danger);
+}
+
+.btn-delete {
+  color: var(--danger);
+  border-color: transparent;
+  background: none;
+  font-size: 0.8rem;
+}
+
+.completed-badge {
+  color: var(--success);
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.inline-form {
+  display: inline;
+}
+
+.empty-state {
+  color: var(--muted);
+  text-align: center;
+  padding: 2rem;
+}
+
+/* --- Log page --- */
+.log-page {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1rem;
+}
+
+.log-summary {
+  color: var(--muted);
+  margin-bottom: 1rem;
+}
+
+.session-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1rem;
+}
+
+.session-table th,
+.session-table td {
+  text-align: left;
+  padding: 0.4rem 0.6rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.session-table thead th {
+  font-size: 0.85rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.session-table tfoot td {
+  font-weight: 600;
+  border-top: 2px solid var(--text);
+  border-bottom: none;
+}
+
+.log-page a {
+  color: var(--accent);
+  text-decoration: none;
+}

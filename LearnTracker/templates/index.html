@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="add-skill">
+    <h2>Add Skill</h2>
+    <form method="POST" action="{{ url_for('create_skill') }}">
+        <input type="text" name="name" placeholder="Skill name" required>
+        <label>Target:
+            <input type="number" name="hours" min="0" value="0" style="width:3em"> h
+            <input type="number" name="minutes" min="0" max="59" value="30" style="width:3em"> m
+        </label>
+        <button type="submit">Add</button>
+    </form>
+</section>
+
+{% if skills %}
+<section class="skill-list">
+    <h2>Skills</h2>
+    {% for skill in skills %}
+    <div class="skill-card" data-skill-id="{{ skill.id }}"
+         data-remaining="{{ skill._remaining }}"
+         data-active-since="{{ skill.active_since or '' }}"
+         data-target="{{ skill.target_seconds }}">
+        <div class="skill-header">
+            <h3>{{ skill.name }}</h3>
+            <span class="remaining">{{ skill._remaining_fmt }} remaining of {{ skill._target_fmt }}</span>
+        </div>
+        <div class="timer-display" id="timer-{{ skill.id }}">--:--:--</div>
+        <div class="skill-actions">
+            {% if skill._remaining > 0 %}
+                {% if skill.active_since %}
+                <button class="btn-stop" data-skill-id="{{ skill.id }}">Stop</button>
+                {% else %}
+                <button class="btn-start" data-skill-id="{{ skill.id }}">Start</button>
+                {% endif %}
+            {% else %}
+            <span class="completed-badge">Goal reached!</span>
+            {% endif %}
+            <a href="{{ url_for('skill_log', skill_id=skill.id) }}">Log</a>
+            <form method="POST" action="{{ url_for('delete_skill', skill_id=skill.id) }}" class="inline-form"
+                  onsubmit="return confirm('Delete {{ skill.name }}?')">
+                <button type="submit" class="btn-delete">Delete</button>
+            </form>
+        </div>
+    </div>
+    {% endfor %}
+</section>
+{% else %}
+<p class="empty-state">No skills yet. Add one above to start tracking!</p>
+{% endif %}
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='timer.js') }}"></script>
+{% endblock %}
