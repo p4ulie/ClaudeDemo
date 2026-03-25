@@ -1,6 +1,6 @@
 """Flask application for LearnTracker — routes, templates, and JSON API."""
 
-from flask import Flask, render_template, request, redirect, url_for, jsonify
+from flask import Flask, render_template, request, redirect, url_for, jsonify, send_from_directory
 
 import models
 
@@ -8,6 +8,14 @@ import models
 def create_app() -> Flask:
     """Application factory — creates and configures the Flask app with all routes."""
     app = Flask(__name__)
+
+    # --- Service worker route (must be served from root for full scope) ---
+
+    @app.route("/sw.js")
+    def service_worker():
+        """Serve the service worker from the root URL for proper PWA scope."""
+        return send_from_directory(app.static_folder, "sw.js",
+                                   mimetype="application/javascript")
 
     # --- HTML routes (server-rendered pages) ---
 

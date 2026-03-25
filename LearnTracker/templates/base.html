@@ -4,6 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LearnTracker</title>
+
+    <!-- PWA manifest — defines app name, icons, theme for install prompt -->
+    <link rel="manifest" href="{{ url_for('static', filename='manifest.json') }}">
+
+    <!-- Theme color for browser chrome and Android status bar -->
+    <meta name="theme-color" content="#0d6efd">
+
+    <!-- iOS PWA support — Apple doesn't read manifest.json fully -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="LearnTracker">
+    <link rel="apple-touch-icon" href="{{ url_for('static', filename='icon-192.png') }}">
+
     <!-- Main stylesheet for the application layout -->
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
@@ -17,6 +30,15 @@
     <main>
         {% block content %}{% endblock %}
     </main>
+
+    <!-- Register the service worker for offline support and install prompt -->
+    <script>
+        if ("serviceWorker" in navigator) {
+            navigator.serviceWorker.register("/sw.js").catch(function (err) {
+                console.warn("Service worker registration failed:", err);
+            });
+        }
+    </script>
 
     <!-- Script block — overridden by pages that need JavaScript -->
     {% block scripts %}{% endblock %}
