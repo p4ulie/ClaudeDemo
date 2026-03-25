@@ -1,17 +1,19 @@
 /* LearnTracker — minimal clean layout */
 
+/* --- CSS custom properties (design tokens) --- */
 :root {
-  --bg: #f8f9fa;
-  --card-bg: #fff;
-  --text: #212529;
-  --muted: #6c757d;
-  --accent: #0d6efd;
-  --danger: #dc3545;
-  --success: #198754;
-  --border: #dee2e6;
-  --radius: 8px;
+  --bg: #f8f9fa;          /* Page background */
+  --card-bg: #fff;        /* Card/panel background */
+  --text: #212529;        /* Primary text color */
+  --muted: #6c757d;       /* Secondary/dimmed text */
+  --accent: #0d6efd;      /* Primary action color (start button, links) */
+  --danger: #dc3545;      /* Destructive action color (stop, delete) */
+  --success: #198754;     /* Positive status color (goal reached) */
+  --border: #dee2e6;      /* Border and divider color */
+  --radius: 8px;          /* Standard border radius for cards */
 }
 
+/* --- Reset and base styles --- */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -23,15 +25,17 @@ body {
   background: var(--bg);
   color: var(--text);
   line-height: 1.5;
-  max-width: 700px;
+  max-width: 700px;       /* Center-constrained content width */
   margin: 0 auto;
   padding: 1rem;
 }
 
+/* --- Header --- */
 header h1 {
   margin-bottom: 1.5rem;
 }
 
+/* Remove link styling from the header title */
 header h1 a {
   color: var(--text);
   text-decoration: none;
@@ -51,13 +55,15 @@ h2 {
   margin-bottom: 1.5rem;
 }
 
+/* Horizontal flex layout for the form inputs */
 .add-skill form {
   display: flex;
   gap: 0.5rem;
-  flex-wrap: wrap;
+  flex-wrap: wrap;        /* Wrap on narrow screens */
   align-items: center;
 }
 
+/* Skill name text input — expands to fill available space */
 .add-skill input[type="text"] {
   flex: 1;
   min-width: 120px;
@@ -67,6 +73,7 @@ h2 {
   font-size: 0.95rem;
 }
 
+/* Hours/minutes number inputs */
 .add-skill input[type="number"] {
   padding: 0.4rem;
   border: 1px solid var(--border);
@@ -74,7 +81,7 @@ h2 {
   font-size: 0.95rem;
 }
 
-/* --- Skill cards --- */
+/* --- Skill cards (one per tracked skill) --- */
 .skill-card {
   background: var(--card-bg);
   border: 1px solid var(--border);
@@ -83,6 +90,7 @@ h2 {
   margin-bottom: 0.75rem;
 }
 
+/* Skill name and remaining time displayed side-by-side */
 .skill-header {
   display: flex;
   justify-content: space-between;
@@ -95,28 +103,33 @@ h2 {
   font-size: 1.1rem;
 }
 
+/* Dimmed remaining time label */
 .remaining {
   color: var(--muted);
   font-size: 0.85rem;
 }
 
+/* --- Timer countdown display --- */
 .timer-display {
-  font-family: "Courier New", monospace;
+  font-family: "Courier New", monospace;  /* Monospace for aligned digits */
   font-size: 2rem;
   text-align: center;
   padding: 0.5rem 0;
-  color: var(--muted);
+  color: var(--muted);   /* Dimmed when idle */
 }
 
+/* Highlighted blue when timer is actively counting down */
 .timer-display.timer-active {
   color: var(--accent);
   font-weight: bold;
 }
 
+/* Green when the target time has been reached */
 .timer-display.timer-done {
   color: var(--success);
 }
 
+/* --- Action buttons row (start, stop, log, delete) --- */
 .skill-actions {
   display: flex;
   gap: 0.5rem;
@@ -124,7 +137,7 @@ h2 {
   margin-top: 0.5rem;
 }
 
-/* --- Buttons --- */
+/* --- Shared button and link styles --- */
 button, .skill-actions a {
   padding: 0.4rem 0.8rem;
   border: 1px solid var(--border);
@@ -140,6 +153,7 @@ button:hover, .skill-actions a:hover {
   background: var(--bg);
 }
 
+/* Start button — blue accent */
 .btn-start {
   background: var(--accent);
   color: #fff;
@@ -151,6 +165,7 @@ button:hover, .skill-actions a:hover {
   background: var(--accent);
 }
 
+/* Stop button — red danger */
 .btn-stop {
   background: var(--danger);
   color: #fff;
@@ -162,6 +177,7 @@ button:hover, .skill-actions a:hover {
   background: var(--danger);
 }
 
+/* Delete button — subtle red text, no background */
 .btn-delete {
   color: var(--danger);
   border-color: transparent;
@@ -169,23 +185,26 @@ button:hover, .skill-actions a:hover {
   font-size: 0.8rem;
 }
 
+/* Badge shown when skill's target time has been fully used */
 .completed-badge {
   color: var(--success);
   font-weight: 600;
   font-size: 0.9rem;
 }
 
+/* Keep delete form inline with other action buttons */
 .inline-form {
   display: inline;
 }
 
+/* Shown when no skills exist yet */
 .empty-state {
   color: var(--muted);
   text-align: center;
   padding: 2rem;
 }
 
-/* --- Log page --- */
+/* --- Session log page --- */
 .log-page {
   background: var(--card-bg);
   border: 1px solid var(--border);
@@ -193,11 +212,13 @@ button:hover, .skill-actions a:hover {
   padding: 1rem;
 }
 
+/* Summary line showing remaining vs target time */
 .log-summary {
   color: var(--muted);
   margin-bottom: 1rem;
 }
 
+/* Session history table */
 .session-table {
   width: 100%;
   border-collapse: collapse;
@@ -211,6 +232,7 @@ button:hover, .skill-actions a:hover {
   border-bottom: 1px solid var(--border);
 }
 
+/* Uppercase muted header labels */
 .session-table thead th {
   font-size: 0.85rem;
   color: var(--muted);
@@ -218,12 +240,14 @@ button:hover, .skill-actions a:hover {
   letter-spacing: 0.05em;
 }
 
+/* Bold total row at the bottom of the table */
 .session-table tfoot td {
   font-weight: 600;
   border-top: 2px solid var(--text);
   border-bottom: none;
 }
 
+/* Back link on the log page */
 .log-page a {
   color: var(--accent);
   text-decoration: none;

@@ -1,11 +1,15 @@
 {% extends "base.html" %}
 
 {% block content %}
+<!-- Session log page for a single skill -->
 <section class="log-page">
+    <!-- Skill name as page heading -->
     <h2>{{ skill.name }}</h2>
+    <!-- Summary showing remaining time vs total target -->
     <p class="log-summary">{{ skill._remaining_fmt }} remaining of {{ skill._target_fmt }}</p>
 
     {% if skill.sessions %}
+    <!-- Table of all recorded learning sessions -->
     <table class="session-table">
         <thead>
             <tr><th>Date</th><th>Duration</th></tr>
@@ -13,19 +17,23 @@
         <tbody>
             {% for session in skill.sessions %}
             <tr>
+                <!-- Format ISO timestamp as readable date (trim seconds, replace T with space) -->
                 <td>{{ session.start[:16].replace('T', ' ') }}</td>
                 <td>{{ session._duration_fmt }}</td>
             </tr>
             {% endfor %}
         </tbody>
+        <!-- Footer row with total time across all sessions -->
         <tfoot>
             <tr><td>Total</td><td>{{ total_fmt }}</td></tr>
         </tfoot>
     </table>
     {% else %}
+    <!-- Shown when no sessions have been recorded for this skill -->
     <p>No sessions recorded yet.</p>
     {% endif %}
 
+    <!-- Navigation link back to the skill list -->
     <a href="{{ url_for('index') }}">&larr; Back</a>
 </section>
 {% endblock %}

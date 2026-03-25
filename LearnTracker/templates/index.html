@@ -1,10 +1,13 @@
 {% extends "base.html" %}
 
 {% block content %}
+<!-- Form section for adding a new skill -->
 <section class="add-skill">
     <h2>Add Skill</h2>
     <form method="POST" action="{{ url_for('create_skill') }}">
+        <!-- Skill name input -->
         <input type="text" name="name" placeholder="Skill name" required>
+        <!-- Target time inputs (hours and minutes) -->
         <label>Target:
             <input type="number" name="hours" min="0" value="0" style="width:3em"> h
             <input type="number" name="minutes" min="0" max="59" value="30" style="width:3em"> m
@@ -14,29 +17,39 @@
 </section>
 
 {% if skills %}
+<!-- List of all tracked skills with timer controls -->
 <section class="skill-list">
     <h2>Skills</h2>
     {% for skill in skills %}
+    <!-- Each skill card carries data attributes used by timer.js for client-side countdown -->
     <div class="skill-card" data-skill-id="{{ skill.id }}"
          data-remaining="{{ skill._remaining }}"
          data-active-since="{{ skill.active_since or '' }}"
          data-target="{{ skill.target_seconds }}">
+        <!-- Header row: skill name and progress summary -->
         <div class="skill-header">
             <h3>{{ skill.name }}</h3>
             <span class="remaining">{{ skill._remaining_fmt }} remaining of {{ skill._target_fmt }}</span>
         </div>
+        <!-- Countdown display — updated in real-time by timer.js -->
         <div class="timer-display" id="timer-{{ skill.id }}">--:--:--</div>
+        <!-- Action buttons: start/stop, view log, delete -->
         <div class="skill-actions">
             {% if skill._remaining > 0 %}
                 {% if skill.active_since %}
+                <!-- Timer is running — show stop button -->
                 <button class="btn-stop" data-skill-id="{{ skill.id }}">Stop</button>
                 {% else %}
+                <!-- Timer is idle — show start button -->
                 <button class="btn-start" data-skill-id="{{ skill.id }}">Start</button>
                 {% endif %}
             {% else %}
+            <!-- Target time fully used — show completion badge -->
             <span class="completed-badge">Goal reached!</span>
             {% endif %}
+            <!-- Link to the session log page -->
             <a href="{{ url_for('skill_log', skill_id=skill.id) }}">Log</a>
+            <!-- Delete form with confirmation dialog -->
             <form method="POST" action="{{ url_for('delete_skill', skill_id=skill.id) }}" class="inline-form"
                   onsubmit="return confirm('Delete {{ skill.name }}?')">
                 <button type="submit" class="btn-delete">Delete</button>
@@ -46,10 +59,12 @@
     {% endfor %}
 </section>
 {% else %}
+<!-- Empty state shown when no skills have been created yet -->
 <p class="empty-state">No skills yet. Add one above to start tracking!</p>
 {% endif %}
 {% endblock %}
 
 {% block scripts %}
+<!-- Client-side timer logic for countdown display and async start/stop -->
 <script src="{{ url_for('static', filename='timer.js') }}"></script>
 {% endblock %}
