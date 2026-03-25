@@ -1,0 +1,27 @@
+# systemd service file for PolyBot
+# Install: sudo cp polybot.service /etc/systemd/system/
+# Enable:  sudo systemctl enable polybot
+# Start:   sudo systemctl start polybot
+# Logs:    journalctl -u polybot -f
+#
+# Auto-restarts on crash via Restart=always
+
+[Unit]
+Description=PolyBot - Autonomous Polymarket Trading Bot
+After=network.target
+
+[Service]
+Type=simple
+User=polybot
+WorkingDirectory=/opt/polybot
+ExecStart=/opt/polybot/.venv/bin/python -m polybot.bot
+Restart=always
+RestartSec=10
+EnvironmentFile=/opt/polybot/.env
+
+# Resource limits
+MemoryMax=512M
+CPUQuota=50%
+
+[Install]
+WantedBy=multi-user.target
